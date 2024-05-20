@@ -1,31 +1,32 @@
 package Core
 
 type CppHeader struct {
-	UnknownDerivatives []*string
-	Defines            []*DefineDef
-	Includes           []*IncludeDef
+	Defines  []*DefineDef  `parser:"@@"`
+	Includes []*IncludeDef `parser:"@@"`
 
-	Classes []*ClassDef
-	Structs []*StructDef
+	Classes []*ClassDef  `parser:"@@"`
+	Structs []*StructDef `parser:"@@"`
+
+	UnknownDerivatives []*string
 }
 
 type DefineDef struct {
-	Key   string
+	Key   string `parser:"'#define @'"`
 	Value string
 }
 
 type IncludeDef struct {
-	Path string
+	Path string `parser:"'#include (<)@(>)'"`
 }
 
 type ClassDef struct {
-	DllMod string
+	DllMod string `parser:"'class @'"`
 	Name   string
 	Body   *ObjectBody
 }
 
 type StructDef struct {
-	DllMod string
+	DllMod string `parser:"'struct @'"`
 	Name   string
 	Body   *ObjectBody
 }
